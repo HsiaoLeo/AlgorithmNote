@@ -2,14 +2,14 @@
 function bSearchWithDataNode(arr,left,right,targetValue){
     while(left<=right){
         let mid = (left+right)/2|0;
-        if(targetValue.cmp(arr[mid].data)==1) left=mid+1;
-        else if(targetValue.cmp(arr[mid].data)==-1)right=mid-1;
+        if(targetValue.cmp(arr[mid])==1) left=mid+1;
+        else if(targetValue.cmp(arr[mid])==-1)right=mid-1;
         else return mid;
     }
     return -1;
 }
 function binarySearch(arr,targetValue){
-    return bSearch(arr,0,arr.length-1,targetValue);
+    return bSearchWithDataNode(arr,0,arr.length-1,targetValue);
 }
 
 class NumberData{
@@ -58,30 +58,19 @@ class MWTNodes{
         return i;
     }
     deleteKey(data){
-        let i;
-        for(i=0;i<this.keyCount;i++){
-            if(data.cmp(this.keyArr[i])==0){
-                if(this.childNodesArr[i]==null && this.childNodesArr[i+1]==null){
-                    for(let j=i;j<this.keyArr.length-1;j++){
-                        this.keyArr[j] = this.keyArr[j+1];
-                        this.childNodesArr[j]=this.childNodesArr[j+1];
-                        this.childNodesArr[j+1]=this.childNodesArr[j+2];
-                    }
-                    this.keyCount --;
-                }
-                return i;
+        let i = bSearchWithDataNode(this.keyArr,0,this.keyCount-1,data);
+        if(this.childNodesArr[i]==null && this.childNodesArr[i+1]==null){
+            for(let j=i;j<this.keyArr.length-1;j++){
+                this.keyArr[j] = this.keyArr[j+1];
+                this.childNodesArr[j]=this.childNodesArr[j+1];
+                this.childNodesArr[j+1]=this.childNodesArr[j+2];
             }
+            this.keyCount --;
         }
-        return -1;
+        return i;
     }
     searchKey(data){
-        let i;
-        for(i=0;i<this.keyCount;i++){
-            if(data.cmp(this.keyArr[i])==0){
-                return i;
-            }
-        }
-        return -1;
+        return bSearchWithDataNode(this.keyArr,0,this.keyCount-1,data);
     }
     //若未找到適當child return 0
     searchChildNode(data){
