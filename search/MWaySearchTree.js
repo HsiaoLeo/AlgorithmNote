@@ -8,6 +8,24 @@ function bSearchWithDataNode(arr,left,right,targetValue){
     }
     return -1;
 }
+function bSearchGapWithDataNode(arr,left,right,targetValue){
+    while(left<=right){
+        let mid = (left+right)/2|0;
+        if(targetValue.cmp(arr[mid])==1) {
+            left=mid+1;
+            if(left == right){
+                return left;
+            }
+        }
+        else if(targetValue.cmp(arr[mid])==-1){
+            right=mid-1;
+            if(left == right){
+                return mid;
+            }
+        }
+        else return mid;
+    }
+}
 function binarySearch(arr,targetValue){
     return bSearchWithDataNode(arr,0,arr.length-1,targetValue);
 }
@@ -82,6 +100,7 @@ class MWTNodes{
             }
         }
         return i;
+        //return bSearchGapWithDataNode(this.keyArr,0,this.keyCount,data);
     }
     fetchMinChild(){
         return this.childNodesArr[0];
