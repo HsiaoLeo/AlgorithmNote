@@ -1,2 +1,2 @@
 # AlgorithmNote
-learn algorithm by javascript
+learn algorithm by javascript or other languages
